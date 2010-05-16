@@ -2,4 +2,11 @@
 <resources>
     <string name="hello">Hello World, LinkShrink!</string>
     <string name="app_name">Link Shrink</string>
+<string name="link_shortened_success">Link has been shortened!</string>
+<string name="link_shortened_failure">Error while contacting API</string>
+
+
+
+
+<string name="shortening">Shortening URL...</string>
 </resources>
