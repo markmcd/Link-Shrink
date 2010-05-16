@@ -4,9 +4,10 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    />
+
+<TextView android:id="@+id/TextView01" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/bitly_username"></TextView><EditText android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/input_bitlyusername"></EditText>
+
+<TextView android:id="@+id/TextView02" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/bitly_apikey"></TextView>
+<EditText android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/input_bitlyapikey"></EditText>
+<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/config_savebutton" android:id="@+id/savebutton"></Button>
 </LinearLayout>

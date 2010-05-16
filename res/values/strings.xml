@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="config_savebutton">Save Changes</string>
+    <string name="bitly_apikey">bit.ly API key</string>
+    <string name="bitly_username">bit.ly username</string>
     <string name="hello">Hello World, LinkShrink!</string>
     <string name="app_name">Link Shrink</string>
 <string name="link_shortened_success">Link has been shortened!</string>
@@ -9,4 +12,6 @@
 
 
 <string name="shortening">Shortening URL...</string>
+<string name="bitly_validation_failed">API key validation failed!</string>
+<string name="bitly_validation_succeed">API details validate &amp; saved</string>
 </resources>
