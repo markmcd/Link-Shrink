@@ -12,6 +12,6 @@
 
 
 <string name="shortening">Shortening URL...</string>
-<string name="bitly_validation_failed">API key validation failed!</string>
-<string name="bitly_validation_succeed">API details validate &amp; saved</string>
+<string name="bitly_validation_failed">Validation failed!</string>
+<string name="bitly_validation_succeed">API details validated &amp; saved.</string>
 </resources>
