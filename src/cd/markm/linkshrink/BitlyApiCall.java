@@ -14,8 +14,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.util.Log;
 
 public class BitlyApiCall {
@@ -25,23 +23,18 @@ public class BitlyApiCall {
 	private static final String BITLY_USERNAME = "linkshrink";
 	private static final String BITLY_APIKEY = "R_7c68806f4d99c4751b18ab2aa2261875";
 
-	private static final String PREF_NAME = "BitlyPrefs";
-	private static final String PREF_APIKEY = "apikey";
-	private static final String PREF_USERNAME = "username";
-
 	private Context ctx;
 	private String username;
 	private String apikey;
 
 	/**
 	 * Create a new bit.ly API instance
-	 * @param context context of the caller - used to manipulate prefs
+	 * @param context context of the caller
 	 */
 	public BitlyApiCall(Context context) {
 		ctx = context;
-		SharedPreferences prefs = ctx.getSharedPreferences(PREF_NAME, 0);
-		username = prefs.getString(PREF_USERNAME, null);
-		apikey = prefs.getString(PREF_APIKEY, null);
+		username = Prefs.getApiLogin(context);
+		apikey = Prefs.getApiKey(context);
 	}
 
 	/**
@@ -55,35 +48,15 @@ public class BitlyApiCall {
 		if (validateApiKey(login, apikey)) {
 			this.username = login;
 			this.apikey = apikey;
-			SharedPreferences sp = ctx.getSharedPreferences(PREF_NAME, 0);
-			Editor editor = sp.edit();
-			editor.putString(PREF_USERNAME, login);
-			editor.putString(PREF_APIKEY, apikey);
 			Log.i(TAG, "Saved API credentials [l: "+login+", k:"+apikey+"]");
-			return editor.commit();
+			return Prefs.saveApiCredentials(ctx, login, apikey);
 		}
 		else {
 			Log.w(TAG, "API credentials failed validation");
 			return false;
 		}
 	}
-	
-	/**
-	 * Retrieve stored API login
-	 * @return login or null 
-	 */
-	public String getApiLogin() {
-		return username;
-	}
-	
-	/**
-	 * Retrieve stored API key
-	 * @return API key or null
-	 */
-	public String getApiKey() {
-		return apikey;
-	}
-	
+		
 	/**
 	 * Shrink a URL using the bit.ly API
 	 * @param longURL URL to be shortened
@@ -103,7 +76,8 @@ public class BitlyApiCall {
 		// do the request
 		try {
 			JSONObject data = getApiData(apiUrl);
-			shortURL = data.getString("url");
+			if (data != null)
+				shortURL = data.getString("url");
 			Log.i(TAG, "Shortened to: "+shortURL);
 		} catch (JSONException e) {
 			Log.e(TAG, "JSON Exception :(", e);

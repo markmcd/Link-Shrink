@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="shrink_action_copy">Copy it to the clipboard</string>
+    <string name="shrink_action_reshare">Re-share the URL</string>
+    <string name="shrink_action">After shortening my link:</string>
     <string name="config_savebutton">Save Changes</string>
     <string name="bitly_apikey">bit.ly API key</string>
     <string name="bitly_username">bit.ly username</string>
@@ -14,4 +17,6 @@
 <string name="shortening">Shortening URL...</string>
 <string name="bitly_validation_failed">Validation failed!</string>
 <string name="bitly_validation_succeed">API details validated &amp; saved.</string>
+<string name="link_copied">Link copied to clipboard</string>
+<string name="prefs_saved">Saved!</string>
 </resources>

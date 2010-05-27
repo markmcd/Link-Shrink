@@ -9,5 +9,11 @@
 
 <TextView android:id="@+id/TextView02" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/bitly_apikey"></TextView>
 <EditText android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/input_bitlyapikey"></EditText>
-<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/config_savebutton" android:id="@+id/savebutton"></Button>
+<TextView android:id="@+id/TextView03" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/shrink_action"></TextView><RadioGroup android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/ActionGroup"><RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/ReshareRadio" android:text="@string/shrink_action_reshare"></RadioButton><RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/shrink_action_copy" android:id="@+id/CopyRadio"></RadioButton></RadioGroup><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/config_savebutton" android:id="@+id/savebutton"></Button>
+
+
+
+
+
+
 </LinearLayout>

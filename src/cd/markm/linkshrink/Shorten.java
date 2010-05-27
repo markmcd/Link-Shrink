@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.ClipboardManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -44,6 +45,19 @@ public class Shorten extends Activity {
          @Override
          public void handleMessage(Message msg) {
         	 super.handleMessage(msg);
+        	 Bundle b = msg.getData();
+        	 String output = b.getString("message");
+        	 if (b.getBoolean("success")) {
+        		 Log.i(TAG, "Link shortened successfully");
+        		 Toast.makeText(getApplicationContext(), output, 
+        				 Toast.LENGTH_SHORT).show();
+        	 }
+        	 else {
+        		 Log.i(TAG, "Link shortening failed");
+        		 Toast.makeText(getApplicationContext(), output, 
+        				 Toast.LENGTH_LONG).show();
+        	 }
+        	 
         	 finish();
          }
 	};
@@ -60,22 +74,43 @@ public class Shorten extends Activity {
 		public void run() {
 			BitlyApiCall api = new BitlyApiCall(ctx);
 			String shortURL = api.shortenURL(longURL) ;
+			boolean success = true;
+			String message = "";
 
 			// if the URL hasn't changed, show an error
-			if (shortURL.equals(longURL))
-				Toast.makeText(ctx, getString(R.string.link_shortened_failure), 
-						Toast.LENGTH_LONG).show();
+			if (shortURL.equals(longURL)) {
+				message =  getString(R.string.link_shortened_failure); 
+				success = false;
+			}
 
-			// pass it straight through regardless of the success of the 
-			// request so we don't block the use of a URL when something fails 
-			// internally - the original URL still gets passed back
-			Intent passthru = new Intent();
-			passthru.setAction(Intent.ACTION_SEND);
-			passthru.setType("text/plain");
-			passthru.putExtra(Intent.EXTRA_TEXT, shortURL);
-			startActivity(passthru);
+			switch (Prefs.getShrinkAction(ctx)) {
+			case CLIPBOARD:
+				// copy to clipboard & let the user know
+				ClipboardManager cb = (ClipboardManager) 
+						ctx.getSystemService(CLIPBOARD_SERVICE);
+				cb.setText(shortURL);
+				message = getString(R.string.link_copied);
+				break;
+			case RESHARE:
+			default:
+				// pass it straight through regardless of the success of the 
+				// request so we don't block the use of a URL when something 
+				// fails internally - the original URL still gets passed back
+				Intent passthru = new Intent();
+				passthru.setAction(Intent.ACTION_SEND);
+				passthru.setType("text/plain");
+				passthru.putExtra(Intent.EXTRA_TEXT, shortURL);
+				startActivity(passthru);
+				message = getString(R.string.link_shortened_success);
+				break;
+			}
 			
-			handler.sendEmptyMessage(0);
+			Bundle b = new Bundle();
+			b.putBoolean("success", success);
+			b.putString("message", message);
+			Message msg = new Message();
+			msg.setData(b);
+			handler.sendMessage(msg);
 			progress.dismiss();
 		}
 	}
